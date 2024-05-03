@@ -16,11 +16,41 @@ class AdminBuyers extends StatefulWidget {
 
 class _AdminBuyersState extends State<AdminBuyers> {
   FirestoreService firestoreService = FirestoreService();
+  List orderDatas = [];
+  void loadAllORderDatas() {
+    orderDatas = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db
+        .collection('orders')
+        .orderBy('date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      return {
+        querySnapshot.docs.forEach((doc) {
+          print('load all ORDER data ${doc.id} => ${doc.data()}');
+          doc.data()['id'] = doc.id;
+          if (doc.data()['status'] == "Pending") {
+            orderDatas.add(doc.data());
+          }
+        }),
+        setState(() {})
+      };
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    loadAllORderDatas();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RAppBar(context),
-      drawer: RDrawer(context),
+      appBar: RAppBar(context, orderDatas),
+      drawer: RDrawer(context, orderDatas),
       body: Stack(
         children: [
           Image.network(

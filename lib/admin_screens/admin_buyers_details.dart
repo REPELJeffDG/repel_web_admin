@@ -34,18 +34,41 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
   bool paid = false;
   FirebaseFirestore? db;
 
+  List orderDatas = [];
+  void loadAllORderDatas() {
+    orderDatas = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db
+        .collection('orders')
+        .orderBy('date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      return {
+        querySnapshot.docs.forEach((doc) {
+          print('load all ORDER data ${doc.id} => ${doc.data()}');
+          doc.data()['id'] = doc.id;
+          if (doc.data()['status'] == "Pending") {
+            orderDatas.add(doc.data());
+          }
+        }),
+        setState(() {})
+      };
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    loadAllORderDatas();
     db = FirebaseFirestore.instance;
-    paid = widget.data['paid'];
+    paid = data['status'] == "Pending" ? false : true;
     name = data['name'];
     location = data['location'];
     paymentMethod = data['payment_method'];
     amount = data['amount'];
-    status = data['status'];
     fileLink = data['fileLink'];
+    status = data['status'];
     date = data['date'];
     id = data['id'];
   }
@@ -70,7 +93,7 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
         ),
         title: Text('${widget.data['name']}'),
       ),
-      drawer: RDrawer(context),
+      drawer: RDrawer(context, orderDatas),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Center(
@@ -278,6 +301,7 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
                               const SnackBar(
                                   content:
                                       Text('Successfully saved all changes')));
+                          setState(() {});
                         },
                         child: Text(
                           'Save Changes',

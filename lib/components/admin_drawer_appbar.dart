@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:repel/admin_screens/admin_buyers_datatable.dart';
@@ -8,7 +9,7 @@ import 'package:repel/admin_screens/admin_buyers.dart';
 import 'package:repel/admin_screens/admin_sales.dart';
 import 'package:repel/components/textstyle.dart';
 
-Widget RDrawer(BuildContext context) {
+Widget RDrawer(BuildContext context, List orderDatas) {
   return Drawer(
     child: Stack(
       children: [
@@ -96,12 +97,15 @@ Widget RDrawer(BuildContext context) {
                 Icons.group,
                 color: Color.fromARGB(255, 12, 69, 70),
               ),
-              title: Text(
-                'Buyers',
-                style: GoogleFonts.firaSansCondensed(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 12, 69, 70),
-                  fontSize: 22,
+              title: Badge(
+                label: Text("${orderDatas.length.toString()}"),
+                child: Text(
+                  'Buyers',
+                  style: GoogleFonts.firaSansCondensed(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 12, 69, 70),
+                    fontSize: 22,
+                  ),
                 ),
               ),
               onTap: () {
@@ -134,7 +138,7 @@ Widget RDrawer(BuildContext context) {
   );
 }
 
-PreferredSizeWidget RAppBar(context) {
+PreferredSizeWidget RAppBar(context, orderDatas) {
   final width = MediaQuery.of(context).size.width;
   return width > 780
       ? AppBar(
@@ -169,7 +173,7 @@ PreferredSizeWidget RAppBar(context) {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => AdminHome()));
                     },
-                    child: Text('Sales', style: getNavStyle(context))),
+                    child: Text('Dashboard', style: getNavStyle(context))),
                 Container(width: 30),
                 TextButton(
                     onPressed: () {
@@ -190,7 +194,9 @@ PreferredSizeWidget RAppBar(context) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => AdminPurchase()));
                     },
-                    child: Text('Buyers', style: getNavStyle(context))),
+                    child: Badge(
+                        label: Text("${orderDatas.length.toString()}"),
+                        child: Text('Buyers', style: getNavStyle(context)))),
                 Container(width: 30),
                 TextButton(
                     onPressed: () {

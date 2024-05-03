@@ -74,7 +74,9 @@ class FirestoreService {
   }
 
   updateData(String id, bool paid) {
-    orders.doc(id).update({'paid': paid}).onError(
+    String stat;
+    paid ? stat = "Paid" : stat = "Pending";
+    orders.doc(id).update({'status': stat}).onError(
         (e, _) => print("Error writing document: $e"));
   }
 

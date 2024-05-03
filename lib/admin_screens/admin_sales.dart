@@ -28,6 +28,7 @@ class _AdminSalesState extends State<AdminSales> {
   int totalBuyers = 0;
   int totalInterested = 0;
   int currentIndex = 0;
+  List orderDatas = [];
   final List<String> imagePaths = [
     'https://firebasestorage.googleapis.com/v0/b/repel-a3a4e.appspot.com/o/assets%2Ffeeder.png?alt=media&token=e35a7195-8d98-4ba2-aeda-f3b1a902c0ea',
     'https://firebasestorage.googleapis.com/v0/b/repel-a3a4e.appspot.com/o/assets%2Ffeeder2.jpg?alt=media&token=fb3b8754-4791-44ca-ae79-caf6c4bc05f6',
@@ -96,11 +97,33 @@ class _AdminSalesState extends State<AdminSales> {
     });
   }
 
+  void loadAllORderDatas() {
+    orderDatas = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db
+        .collection('orders')
+        .orderBy('date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      return {
+        querySnapshot.docs.forEach((doc) {
+          print('load all ORDER data ${doc.id} => ${doc.data()}');
+          doc.data()['id'] = doc.id;
+          if (doc.data()['status'] == "Pending") {
+            orderDatas.add(doc.data());
+          }
+        }),
+        setState(() {})
+      };
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loadAllDatas();
+    loadAllORderDatas();
   }
 
   void goToPreviousImage() {
@@ -122,8 +145,8 @@ class _AdminSalesState extends State<AdminSales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RAppBar(context),
-      drawer: RDrawer(context),
+      appBar: RAppBar(context, orderDatas),
+      drawer: RDrawer(context, orderDatas),
       body: Center(
         child: Stack(
           children: [

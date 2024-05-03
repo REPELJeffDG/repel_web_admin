@@ -18,11 +18,14 @@ class _AdminMessagesState extends State<AdminMessages> {
   FirestoreService firestoreService = FirestoreService();
   FirebaseFirestore? db;
   List contactUsList = [];
+  List orderDatas = [];
   @override
   void initState() {
     // TODO: implement initState
-    loadAllDatas();
+
     super.initState();
+    loadAllDatas();
+    loadAllORderDatas();
   }
 
   loadAllDatas() {
@@ -43,12 +46,33 @@ class _AdminMessagesState extends State<AdminMessages> {
     });
   }
 
+  void loadAllORderDatas() {
+    orderDatas = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db
+        .collection('orders')
+        .orderBy('date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      return {
+        querySnapshot.docs.forEach((doc) {
+          print('load all ORDER data ${doc.id} => ${doc.data()}');
+          doc.data()['id'] = doc.id;
+          if (doc.data()['status'] == "Pending") {
+            orderDatas.add(doc.data());
+          }
+        }),
+        setState(() {})
+      };
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: RAppBar(context),
-      drawer: RDrawer(context),
+      appBar: RAppBar(context, orderDatas),
+      drawer: RDrawer(context, orderDatas),
       body: Stack(children: [
         Image.network(
           'https://firebasestorage.googleapis.com/v0/b/repel-a3a4e.appspot.com/o/assets%2Ffish.jpg?alt=media&token=5b05d4cd-3ba9-4915-96bc-b371d54caed8',

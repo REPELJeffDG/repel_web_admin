@@ -22,10 +22,35 @@ class _AdminBuyerDataTableState extends State<AdminBuyerDataTable> {
   double ts = 12;
   double totalSales = 45000;
   String dropdownValue = 'Today';
+  List orderDatas = [];
+
+  void loadAllORderDatas() {
+    orderDatas = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db
+        .collection('orders')
+        .orderBy('date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      return {
+        querySnapshot.docs.forEach((doc) {
+          print('load all ORDER data ${doc.id} => ${doc.data()}');
+          doc.data()['id'] = doc.id;
+          if (doc.data()['status'] == "Pending") {
+            orderDatas.add(doc.data());
+          }
+        }),
+        setState(() {})
+      };
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
+    loadAllORderDatas();
   }
 
   dateNow() {
@@ -39,8 +64,8 @@ class _AdminBuyerDataTableState extends State<AdminBuyerDataTable> {
     final width = MediaQuery.of(context).size.width;
     ts = width > 880 ? 22 : 12;
     return Scaffold(
-      appBar: RAppBar(context),
-      drawer: RDrawer(context),
+      appBar: RAppBar(context, orderDatas),
+      drawer: RDrawer(context, orderDatas),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

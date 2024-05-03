@@ -17,11 +17,41 @@ class AdminPurchase extends StatefulWidget {
 
 class _AdminPurchaseState extends State<AdminPurchase> {
   FirestoreService firestoreService = FirestoreService();
+  List orderDatas = [];
+  void loadAllORderDatas() {
+    orderDatas = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    db
+        .collection('orders')
+        .orderBy('date', descending: true)
+        .get()
+        .then((querySnapshot) {
+      return {
+        querySnapshot.docs.forEach((doc) {
+          print('load all ORDER data ${doc.id} => ${doc.data()}');
+          doc.data()['id'] = doc.id;
+          if (doc.data()['status'] == "Pending") {
+            orderDatas.add(doc.data());
+          }
+        }),
+        setState(() {})
+      };
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    loadAllORderDatas();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RAppBar(context),
-      drawer: RDrawer(context),
+      appBar: RAppBar(context, orderDatas),
+      drawer: RDrawer(context, orderDatas),
       body: Stack(
         children: [
           Image.network(
@@ -83,6 +113,8 @@ class _AdminPurchaseState extends State<AdminPurchase> {
                                 String nameI = data['name'];
                                 String locationI = data['location'];
                                 String docID = document.id;
+                                bool status =
+                                    data['status'] == "Pending" ? false : true;
                                 data['id'] = docID;
                                 return Stack(
                                   children: [
@@ -94,7 +126,10 @@ class _AdminPurchaseState extends State<AdminPurchase> {
                                       padding: const EdgeInsets.only(
                                           top: 2, bottom: 1),
                                       child: Container(
-                                        color: Color(0xFFD9D9D9),
+                                        //Color(0xFFD9D9D9)
+                                        color: status
+                                            ? Colors.greenAccent
+                                            : Colors.redAccent,
                                         height: 58,
                                         child: ListTile(
                                           onTap: () {
