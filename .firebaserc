@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "repel-a3a4e"
+  },
+  "targets": {
+    "multi-project": {
+      "hosting": {
+        "second-site": [
+          "repel-admin"
+        ]
+      }
+    }
+  }
+}

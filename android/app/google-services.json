@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811930927115",
+    "project_id": "repel-a3a4e",
+    "storage_bucket": "repel-a3a4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811930927115:android:7fe56398791afbc570c70e",
+        "android_client_info": {
+          "package_name": "com.example.repel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGl-FMJe1DMm3etuG10vt4equNmPLlJIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
