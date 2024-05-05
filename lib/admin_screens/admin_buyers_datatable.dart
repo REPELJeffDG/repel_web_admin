@@ -17,7 +17,7 @@ class AdminBuyerDataTable extends StatefulWidget {
 
 class _AdminBuyerDataTableState extends State<AdminBuyerDataTable> {
   final DataTableSource _data = MyData();
-  FirestoreService firestoreService = FirestoreService();
+  // FirestoreService firestoreService = FirestoreService();
   NumberFormat numFormat = NumberFormat('###,###,###,###.00', 'en_US');
   double ts = 12;
   double totalSales = 45000;
