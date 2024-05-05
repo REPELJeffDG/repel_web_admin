@@ -123,37 +123,6 @@ class _AdminLoginState extends State<AdminLogin> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Name',
-                                  style: GoogleFonts.firaSansCondensed(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 12, 69, 70),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, bottom: 5),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter name';
-                                    } else if (value.length < 4) {
-                                      return 'Please enter a valid name';
-                                    }
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.grey[200],
-                                  ),
-                                  controller: nameController,
-                                ),
-                              ),
-                              Container(height: 4),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
                                   'Email Address',
                                   style: GoogleFonts.firaSansCondensed(
                                     fontSize: 18,

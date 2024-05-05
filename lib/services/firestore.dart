@@ -80,6 +80,17 @@ class FirestoreService {
         (e, _) => print("Error writing document: $e"));
   }
 
+  updatePaid(
+      String id, bool paid, bool paid2, bool paid3, bool paid4, bool paid5) {
+    orders.doc(id).update({
+      'paid': paid,
+      'paid2': paid2,
+      'paid3': paid3,
+      'paid4': paid4,
+      'paid5': paid5
+    }).onError((e, _) => print("Error writing document: $e"));
+  }
+
   //update
   // Future<void> updateNote(String docID, bool didPurchase) {
   //   return users.doc(docID).update({'didPurchase': didPurchase});
