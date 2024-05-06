@@ -49,6 +49,7 @@ class _AdminPurchaseState extends State<AdminPurchase> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: RAppBar(context, orderDatas),
       drawer: RDrawer(context, orderDatas),
@@ -110,9 +111,13 @@ class _AdminPurchaseState extends State<AdminPurchase> {
                                 DocumentSnapshot document = ordersList[index];
                                 Map<String, dynamic> data =
                                     document.data() as Map<String, dynamic>;
+                                List paidList = [];
+                                addAllList(paidList, data);
+                                print('PAID =>> ${paidList}');
                                 String nameI = data['name'];
                                 String locationI = data['location'];
                                 String docID = document.id;
+                                String installment = data['installment'];
                                 bool status =
                                     data['status'] == "Pending" ? false : true;
                                 data['id'] = docID;
@@ -139,6 +144,23 @@ class _AdminPurchaseState extends State<AdminPurchase> {
                                                         AdminBuyerDetails(
                                                             data: data)));
                                           },
+                                          trailing: installment == '5 Months'
+                                              ? paidChecks(paidList, width)
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 25),
+                                                  child: Icon(
+                                                    paidList[0]
+                                                        ? Icons
+                                                            .check_circle_outline_sharp
+                                                        : Icons
+                                                            .remove_circle_outline_sharp,
+                                                    size: 30,
+                                                    color: Color.fromARGB(
+                                                        255, 12, 69, 70),
+                                                  ),
+                                                ),
                                           title: Text(
                                             nameI,
                                             style: TextStyle(
@@ -184,5 +206,62 @@ class _AdminPurchaseState extends State<AdminPurchase> {
         ],
       ),
     );
+  }
+
+  Future<void> addAllList(List paidList, Map<String, dynamic> data) async {
+    paidList.add(data['paid']);
+    paidList.add(data['paid2']);
+    paidList.add(data['paid3']);
+    paidList.add(data['paid4']);
+    paidList.add(data['paid5']);
+  }
+
+  Widget paidChecks(List paidList, var width) {
+    return paidList.isEmpty
+        ? CircularProgressIndicator()
+        : Padding(
+            padding: const EdgeInsets.only(bottom: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  paidList[0]
+                      ? Icons.check_circle_outline_sharp
+                      : Icons.remove_circle_outline_sharp,
+                  size: 30,
+                  color: Color.fromARGB(255, 12, 69, 70),
+                ),
+                Icon(
+                  paidList[1]
+                      ? Icons.check_circle_outline_sharp
+                      : Icons.remove_circle_outline_sharp,
+                  size: 30,
+                  color: Color.fromARGB(255, 12, 69, 70),
+                ),
+                Icon(
+                  paidList[2]
+                      ? Icons.check_circle_outline_sharp
+                      : Icons.remove_circle_outline_sharp,
+                  size: 30,
+                  color: Color.fromARGB(255, 12, 69, 70),
+                ),
+                Icon(
+                  paidList[3]
+                      ? Icons.check_circle_outline_sharp
+                      : Icons.remove_circle_outline_sharp,
+                  size: 30,
+                  color: Color.fromARGB(255, 12, 69, 70),
+                ),
+                Icon(
+                  paidList[4]
+                      ? Icons.check_circle_outline_sharp
+                      : Icons.remove_circle_outline_sharp,
+                  size: 30,
+                  color: Color.fromARGB(255, 12, 69, 70),
+                ),
+              ],
+            ),
+          );
   }
 }

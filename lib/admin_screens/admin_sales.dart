@@ -55,7 +55,7 @@ class _AdminSalesState extends State<AdminSales> {
     6: '60k',
   };
 
-  loadAllDatas() {
+  Future<void> loadAllDatas() async {
     FirebaseFirestore? db;
     print('america ya :D');
     db = FirebaseFirestore.instance;
@@ -92,12 +92,15 @@ class _AdminSalesState extends State<AdminSales> {
       print("totes $totalSales");
       setState(() {
         totalBuyers = _data.length;
-        totalSales = 45000.00 * totalBuyers;
+        for (int i = 0; i < totalBuyers; i++) {
+          print("AMOUNT => ${_data[i]['amount']}");
+          totalSales += _data[i]['amount'];
+        }
       });
     });
   }
 
-  void loadAllORderDatas() {
+  Future<void> loadAllORderDatas() async {
     orderDatas = [];
     FirebaseFirestore db = FirebaseFirestore.instance;
     db
@@ -197,13 +200,15 @@ class _AdminSalesState extends State<AdminSales> {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 15),
                                   ),
-                                  Text(
-                                    'PhP ${numFormat.format(totalSales)}',
-                                    style: GoogleFonts.sarabun(
-                                        color: Color(0xFF0C4546),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
+                                  totalSales == 0
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          'PhP ${numFormat.format(totalSales)}',
+                                          style: GoogleFonts.sarabun(
+                                              color: Color(0xFF0C4546),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
                                   Container(height: 10)
                                 ],
                               ),
@@ -237,13 +242,15 @@ class _AdminSalesState extends State<AdminSales> {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 15),
                                   ),
-                                  Text(
-                                    numFormattwo.format(totalBuyers),
-                                    style: GoogleFonts.sarabun(
-                                        color: Color(0xFF0C4546),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
+                                  totalBuyers == 0
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          numFormattwo.format(totalBuyers),
+                                          style: GoogleFonts.sarabun(
+                                              color: Color(0xFF0C4546),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
                                   Container(height: 10)
                                 ],
                               ),
@@ -277,13 +284,15 @@ class _AdminSalesState extends State<AdminSales> {
                                         fontWeight: FontWeight.w500,
                                         fontSize: 15),
                                   ),
-                                  Text(
-                                    numFormattwo.format(totalInterested),
-                                    style: GoogleFonts.sarabun(
-                                        color: Color(0xFF0C4546),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
+                                  totalInterested == 0
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          numFormattwo.format(totalInterested),
+                                          style: GoogleFonts.sarabun(
+                                              color: Color(0xFF0C4546),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
                                   Container(height: 10)
                                 ],
                               ),

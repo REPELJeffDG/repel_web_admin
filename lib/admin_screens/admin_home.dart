@@ -157,7 +157,10 @@ class _AdminHomeWebState extends State<AdminHomeWeb> {
       print("totes $totalSales");
       setState(() {
         totalBuyers = _data.length;
-        totalSales = 45000.00 * totalBuyers;
+        for (int i = 0; i < totalBuyers; i++) {
+          print("AMOUNT => ${_data[i]['amount']}");
+          totalSales += _data[i]['amount'];
+        }
       });
     });
   }
@@ -361,169 +364,169 @@ class _AdminHomeWebState extends State<AdminHomeWeb> {
                     Container(
                       height: 10,
                     ),
-                    Card(
-                      child: Container(
-                        height: 400,
-                        width: 480,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Column(children: [
-                                  Text('Reports',
-                                      style: GoogleFonts.sarabun(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18)),
-                                  Text('Last 7 Days',
-                                      style: GoogleFonts.sarabun(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12))
-                                ]),
-                              ),
-                              Container(height: 10),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 8.0, top: 8.0, right: 8.0),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('24k',
-                                              style: GoogleFonts.sarabun(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18)),
-                                          Text('Customers',
-                                              style: GoogleFonts.sarabun(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12))
-                                        ]),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('3.5k',
-                                              style: GoogleFonts.sarabun(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18)),
-                                          Text('Total Products',
-                                              style: GoogleFonts.sarabun(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12))
-                                        ]),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('2.5k',
-                                              style: GoogleFonts.sarabun(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18)),
-                                          Text('Stock Products',
-                                              style: GoogleFonts.sarabun(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12))
-                                        ]),
-                                  )
-                                ],
-                              ),
-                              Container(height: 25),
-                              //ling chart
-                              AspectRatio(
-                                aspectRatio: 12 / 6,
-                                child: LineChart(LineChartData(
-                                    borderData: FlBorderData(show: false),
-                                    minX: 0,
-                                    maxX: 6,
-                                    minY: 0,
-                                    maxY: 6,
-                                    lineBarsData: [
-                                      LineChartBarData(
-                                          dotData: FlDotData(show: false),
-                                          spots: [
-                                            //idunno how to database this lmao
-                                            FlSpot(0, 0.5),
-                                            FlSpot(1, 2),
-                                            FlSpot(1.5, 2),
-                                            FlSpot(1.7, 2.5),
-                                            FlSpot(2, 3.4),
-                                            FlSpot(2.2, 2.5),
-                                            FlSpot(3.1, 2.7),
-                                            FlSpot(3.2, 3.5),
-                                            FlSpot(4, 4),
-                                            FlSpot(4.2, 3),
-                                            FlSpot(4.9, 2.5),
-                                            FlSpot(5, 3.2),
-                                            FlSpot(5.5, 4),
-                                            FlSpot(5.8, 3),
-                                            FlSpot(6, 3),
-                                          ])
-                                    ],
-                                    gridData: FlGridData(show: false),
-                                    titlesData: FlTitlesData(
-                                        rightTitles: AxisTitles(
-                                            sideTitles:
-                                                SideTitles(showTitles: false)),
-                                        topTitles: AxisTitles(
-                                            sideTitles:
-                                                SideTitles(showTitles: false)),
-                                        bottomTitles: AxisTitles(
-                                            sideTitles: SideTitles(
-                                          showTitles: true,
-                                          getTitlesWidget: (value, meta) {
-                                            return bottomTitles[value] != null
-                                                ? SideTitleWidget(
-                                                    child: Text(
-                                                      bottomTitles[value]
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.grey),
-                                                    ),
-                                                    axisSide: meta.axisSide)
-                                                : Container();
-                                          },
-                                        )),
-                                        leftTitles: AxisTitles(
-                                            sideTitles: SideTitles(
-                                          reservedSize: 30,
-                                          showTitles: true,
-                                          getTitlesWidget: (value, meta) {
-                                            return leftTitles[value.toInt()] !=
-                                                    null
-                                                ? SideTitleWidget(
-                                                    child: Text(
-                                                      leftTitles[value.toInt()]
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.grey),
-                                                    ),
-                                                    axisSide: meta.axisSide)
-                                                : Container();
-                                          },
-                                        ))))),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
+                    // Card(
+                    //   child: Container(
+                    //     height: 400,
+                    //     width: 480,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.symmetric(
+                    //           horizontal: 25, vertical: 10),
+                    //       child: Column(
+                    //         mainAxisAlignment: MainAxisAlignment.start,
+                    //         children: [
+                    //           Align(
+                    //             alignment: Alignment.centerLeft,
+                    //             child: Column(children: [
+                    //               Text('Reports',
+                    //                   style: GoogleFonts.sarabun(
+                    //                       fontWeight: FontWeight.bold,
+                    //                       fontSize: 18)),
+                    //               Text('Last 7 Days',
+                    //                   style: GoogleFonts.sarabun(
+                    //                       color: Colors.grey,
+                    //                       fontWeight: FontWeight.w400,
+                    //                       fontSize: 12))
+                    //             ]),
+                    //           ),
+                    //           Container(height: 10),
+                    //           Row(
+                    //             children: [
+                    //               Padding(
+                    //                 padding: const EdgeInsets.only(
+                    //                     bottom: 8.0, top: 8.0, right: 8.0),
+                    //                 child: Column(
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text('24k',
+                    //                           style: GoogleFonts.sarabun(
+                    //                               fontWeight: FontWeight.bold,
+                    //                               fontSize: 18)),
+                    //                       Text('Customers',
+                    //                           style: GoogleFonts.sarabun(
+                    //                               color: Colors.grey,
+                    //                               fontWeight: FontWeight.w400,
+                    //                               fontSize: 12))
+                    //                     ]),
+                    //               ),
+                    //               Padding(
+                    //                 padding: const EdgeInsets.all(8.0),
+                    //                 child: Column(
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text('3.5k',
+                    //                           style: GoogleFonts.sarabun(
+                    //                               fontWeight: FontWeight.bold,
+                    //                               fontSize: 18)),
+                    //                       Text('Total Products',
+                    //                           style: GoogleFonts.sarabun(
+                    //                               color: Colors.grey,
+                    //                               fontWeight: FontWeight.w400,
+                    //                               fontSize: 12))
+                    //                     ]),
+                    //               ),
+                    //               Padding(
+                    //                 padding: const EdgeInsets.all(8.0),
+                    //                 child: Column(
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text('2.5k',
+                    //                           style: GoogleFonts.sarabun(
+                    //                               fontWeight: FontWeight.bold,
+                    //                               fontSize: 18)),
+                    //                       Text('Stock Products',
+                    //                           style: GoogleFonts.sarabun(
+                    //                               color: Colors.grey,
+                    //                               fontWeight: FontWeight.w400,
+                    //                               fontSize: 12))
+                    //                     ]),
+                    //               )
+                    //             ],
+                    //           ),
+                    //           Container(height: 25),
+                    //           //ling chart
+                    //           AspectRatio(
+                    //             aspectRatio: 12 / 6,
+                    //             child: LineChart(LineChartData(
+                    //                 borderData: FlBorderData(show: false),
+                    //                 minX: 0,
+                    //                 maxX: 6,
+                    //                 minY: 0,
+                    //                 maxY: 6,
+                    //                 lineBarsData: [
+                    //                   LineChartBarData(
+                    //                       dotData: FlDotData(show: false),
+                    //                       spots: [
+                    //                         //idunno how to database this lmao
+                    //                         FlSpot(0, 0.5),
+                    //                         FlSpot(1, 2),
+                    //                         FlSpot(1.5, 2),
+                    //                         FlSpot(1.7, 2.5),
+                    //                         FlSpot(2, 3.4),
+                    //                         FlSpot(2.2, 2.5),
+                    //                         FlSpot(3.1, 2.7),
+                    //                         FlSpot(3.2, 3.5),
+                    //                         FlSpot(4, 4),
+                    //                         FlSpot(4.2, 3),
+                    //                         FlSpot(4.9, 2.5),
+                    //                         FlSpot(5, 3.2),
+                    //                         FlSpot(5.5, 4),
+                    //                         FlSpot(5.8, 3),
+                    //                         FlSpot(6, 3),
+                    //                       ])
+                    //                 ],
+                    //                 gridData: FlGridData(show: false),
+                    //                 titlesData: FlTitlesData(
+                    //                     rightTitles: AxisTitles(
+                    //                         sideTitles:
+                    //                             SideTitles(showTitles: false)),
+                    //                     topTitles: AxisTitles(
+                    //                         sideTitles:
+                    //                             SideTitles(showTitles: false)),
+                    //                     bottomTitles: AxisTitles(
+                    //                         sideTitles: SideTitles(
+                    //                       showTitles: true,
+                    //                       getTitlesWidget: (value, meta) {
+                    //                         return bottomTitles[value] != null
+                    //                             ? SideTitleWidget(
+                    //                                 child: Text(
+                    //                                   bottomTitles[value]
+                    //                                       .toString(),
+                    //                                   style: TextStyle(
+                    //                                       fontSize: 12,
+                    //                                       color: Colors.grey),
+                    //                                 ),
+                    //                                 axisSide: meta.axisSide)
+                    //                             : Container();
+                    //                       },
+                    //                     )),
+                    //                     leftTitles: AxisTitles(
+                    //                         sideTitles: SideTitles(
+                    //                       reservedSize: 30,
+                    //                       showTitles: true,
+                    //                       getTitlesWidget: (value, meta) {
+                    //                         return leftTitles[value.toInt()] !=
+                    //                                 null
+                    //                             ? SideTitleWidget(
+                    //                                 child: Text(
+                    //                                   leftTitles[value.toInt()]
+                    //                                       .toString(),
+                    //                                   style: TextStyle(
+                    //                                       fontSize: 12,
+                    //                                       color: Colors.grey),
+                    //                                 ),
+                    //                                 axisSide: meta.axisSide)
+                    //                             : Container();
+                    //                       },
+                    //                     ))))),
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
                   ]),
                 ],
               )),

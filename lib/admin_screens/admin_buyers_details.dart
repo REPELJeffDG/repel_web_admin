@@ -59,27 +59,30 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
     });
   }
 
+  Future<void> addAllList() async {
+    paidList.add(data['paid']);
+    paidList.add(data['paid2']);
+    paidList.add(data['paid3']);
+    paidList.add(data['paid4']);
+    paidList.add(data['paid5']);
+    fileLinkList.add(data['fileLink']);
+    fileLinkList.add(data['fileLink2']);
+    fileLinkList.add(data['fileLink3']);
+    fileLinkList.add(data['fileLink4']);
+    fileLinkList.add(data['fileLink5']);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loadAllORderDatas();
     db = FirebaseFirestore.instance;
-
+    addAllList();
     name = data['name'];
     location = data['location'];
     paymentMethod = data['payment_method'];
     amount = data['amount'];
-    paidList.add(false);
-    paidList.add(false);
-    paidList.add(false);
-    paidList.add(false);
-    paidList.add(false);
-    fileLinkList.add("data['fileLink']");
-    fileLinkList.add("data['fileLink2']");
-    fileLinkList.add("data['fileLink3']");
-    fileLinkList.add("data['fileLink4']");
-    fileLinkList.add("data['fileLink5']");
     installment = data['installment'];
     status = data['status'];
     date = data['date'];
@@ -111,7 +114,6 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
               ),
               title: Text('${widget.data['name']}'),
             ),
-            drawer: RDrawer(context, orderDatas),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Center(
@@ -436,7 +438,7 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
                       child: Text(
                         'View',
                       )),
-              fileLinkList[2] == 'null'
+              fileLinkList[1] == 'null'
                   ? Text('N/A')
                   : TextButton(
                       onPressed: () {
@@ -445,7 +447,7 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
                       child: Text(
                         'View',
                       )),
-              fileLinkList[3] == 'null'
+              fileLinkList[2] == 'null'
                   ? Text('N/A')
                   : TextButton(
                       onPressed: () {
@@ -454,7 +456,7 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
                       child: Text(
                         'View',
                       )),
-              fileLinkList[4] == 'null'
+              fileLinkList[3] == 'null'
                   ? Text('N/A')
                   : TextButton(
                       onPressed: () {
@@ -463,7 +465,7 @@ class _AdminBuyerDetailsState extends State<AdminBuyerDetails> {
                       child: Text(
                         'View',
                       )),
-              fileLinkList[5] == 'null'
+              fileLinkList[4] == 'null'
                   ? Text('N/A')
                   : TextButton(
                       onPressed: () {

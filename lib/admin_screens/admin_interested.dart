@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:repel/admin_screens/myprofile.dart';
 import 'package:repel/components/admin_drawer_appbar.dart';
 import 'package:repel/services/firestore.dart';
 
@@ -111,6 +112,7 @@ class _AdminBuyersState extends State<AdminBuyers> {
                                     document.data() as Map<String, dynamic>;
                                 String nameI = data['name'];
                                 String emailI = data['email'];
+                                String docID = document.id;
                                 //bool isAdmin = data['isAdmin'];
                                 //make it so only non admin show ups
                                 //ok na, separate docs for each acc
@@ -127,7 +129,14 @@ class _AdminBuyersState extends State<AdminBuyers> {
                                         color: Color(0xFFD9D9D9),
                                         height: 58,
                                         child: ListTile(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MyProfile(
+                                                            docID: docID)));
+                                          },
                                           title: Text(
                                             nameI,
                                             style: TextStyle(
